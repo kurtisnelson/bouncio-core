@@ -1,0 +1,7 @@
+language: elixir
+otp_release:
+  - 17.4
+addons:
+  postgresql: '9.3'
+before_script:
+  - mix do ecto.create, ecto.migrate
