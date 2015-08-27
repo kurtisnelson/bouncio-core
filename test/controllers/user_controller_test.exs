@@ -23,7 +23,7 @@ defmodule Bouncer.UserControllerTest do
 
   test "does not show resource and instead throw error when id is nonexistent", %{conn: conn} do
     assert_raise Ecto.NoResultsError, fn ->
-      get conn, user_path(conn, :show, "abcd")
+      get conn, user_path(conn, :show, "ce567b52-e660-4657-9029-19465e72a03a")
     end
   end
 
