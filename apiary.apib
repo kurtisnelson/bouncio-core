@@ -9,7 +9,7 @@ Handles authentication
 
 ### List All Users [GET]
 
-+ Response 200 (application/json)
++ Response 200 (application/json; charset=utf-8)
 
         {
             "data": [
@@ -27,29 +27,25 @@ Handles authentication
 
 You may register for an account using this endpoint
 
-+ Request (application/json)
++ Request (application/json; charset=utf-8)
 
         {
-            "email": "kurt@example.com",
-            "password": "12345678"
+            "user": {
+              "email": "kurt@example.com",
+              "password": "12345678"
+            }
         }
 
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /users/896ad747-442e-4438-aee5-b85cf234a40b
++ Response 201 (application/json; charset=utf-8)
 
     + Body
 
             {
-            "data": [
-                {
+                "data": {
                     "type": "users",
                     "id": "896ad747-442e-4438-aee5-b85cf234a40b",
                     "attributes": {
                         "email": "kurt@example.com"
                     }
                 }
-            ]
             }
