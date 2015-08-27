@@ -2,7 +2,7 @@ defmodule Bouncer.UserControllerTest do
   use Bouncer.ConnCase
 
   alias Bouncer.User
-  @valid_attrs %{email: "some content"}
+  @valid_attrs %{email: "kurt@example.com", password: "12345678"}
   @invalid_attrs %{}
 
   setup do
@@ -18,21 +18,19 @@ defmodule Bouncer.UserControllerTest do
   test "shows chosen resource", %{conn: conn} do
     user = Repo.insert! %User{}
     conn = get conn, user_path(conn, :show, user)
-    assert json_response(conn, 200)["data"] == %{
-      "id" => user.id
-    }
+    assert json_response(conn, 200)["data"]["id"] == user.id
   end
 
   test "does not show resource and instead throw error when id is nonexistent", %{conn: conn} do
     assert_raise Ecto.NoResultsError, fn ->
-      get conn, user_path(conn, :show, -1)
+      get conn, user_path(conn, :show, "abcd")
     end
   end
 
   test "creates and renders resource when data is valid", %{conn: conn} do
     conn = post conn, user_path(conn, :create), user: @valid_attrs
     assert json_response(conn, 201)["data"]["id"]
-    assert Repo.get_by(User, @valid_attrs)
+    assert Repo.get_by(User, email: @valid_attrs.email)
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
@@ -44,7 +42,7 @@ defmodule Bouncer.UserControllerTest do
     user = Repo.insert! %User{}
     conn = put conn, user_path(conn, :update, user), user: @valid_attrs
     assert json_response(conn, 200)["data"]["id"]
-    assert Repo.get_by(User, @valid_attrs)
+    assert Repo.get_by(User, email: @valid_attrs.email)
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do

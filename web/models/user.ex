@@ -1,7 +1,7 @@
 defmodule Bouncer.User do
   use Bouncer.Web, :model
 
-  @primary_key {:id, :binary_id, autogenerate: true}
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "users" do
     field :email, :string
 
