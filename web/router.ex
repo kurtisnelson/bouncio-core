@@ -11,7 +11,6 @@ defmodule Bouncer.Router do
 
   pipeline :api do
     plug :accepts, ["json-api", "json"]
-    plug PlugCors, [origins: ["*"]]
   end
 
   scope "/", Bouncer do

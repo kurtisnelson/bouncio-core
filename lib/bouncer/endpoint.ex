@@ -35,5 +35,6 @@ defmodule Bouncer.Endpoint do
     key: "_bouncer_key",
     signing_salt: "7bI3Bmyd"
 
+  plug CORSPlug, [origin: '*']
   plug Bouncer.Router
 end

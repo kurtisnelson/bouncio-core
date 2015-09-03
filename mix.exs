@@ -35,7 +35,7 @@ defmodule Bouncer.Mixfile do
      {:phoenix_html, "~> 2.1"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:cowboy, "~> 1.0"},
-     {:plug_cors, "~> 0.7"},
+     {:cors_plug, "~> 0.1.3"},
    ]
   end
 end
