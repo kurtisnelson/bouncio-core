@@ -18,7 +18,7 @@ defmodule Bouncer.Mixfile do
   def application do
     [mod: {Bouncer, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :comeonin]]
   end
 
   # Specifies which paths to compile per environment
@@ -35,7 +35,9 @@ defmodule Bouncer.Mixfile do
      {:phoenix_html, "~> 2.1"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:cowboy, "~> 1.0"},
+     {:comeonin, "~> 1.1"},
      {:cors_plug, "~> 0.1.3"},
+     {:multidef, "> 0.0.0"},
    ]
   end
 end
