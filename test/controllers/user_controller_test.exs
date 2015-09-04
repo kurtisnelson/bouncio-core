@@ -2,7 +2,7 @@ defmodule Bouncer.UserControllerTest do
   use Bouncer.ConnCase
 
   alias Bouncer.User
-  @valid_attrs %{email: "kurt@example.com", password: "12345678"}
+  @valid_attrs %{application_id: "00000000-0000-0000-0000-000000000000", email: "kurt@example.com", password: "12345678"}
   @invalid_attrs %{email: "kurt", password: "1234"}
   @password_error %{"detail" => "should be at least 8 characters", "source" => %{"pointer" => "/data/attributes/password"}, "title" => "Invalid Attribute"}
 
@@ -44,7 +44,7 @@ defmodule Bouncer.UserControllerTest do
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
     conn = post conn, user_path(conn, :create), %{data: %{ type: "users", attributes: @invalid_attrs }}
-    assert %{"errors" => [@password_error, _]} = json_response(conn, 422)
+    assert %{"errors" => [@password_error, _, _]} = json_response(conn, 422)
   end
 
   test "updates and renders chosen resource when data is valid", %{conn: conn} do
@@ -57,7 +57,7 @@ defmodule Bouncer.UserControllerTest do
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
     user = Repo.insert! %User{}
     conn = put conn, user_path(conn, :update, user), %{data: %{ type: "users", attributes: @invalid_attrs }}
-    assert %{"errors" => [@password_error, _]} = json_response(conn, 422)
+    assert %{"errors" => [@password_error, _, _]} = json_response(conn, 422)
   end
 
   test "deletes chosen resource", %{conn: conn} do

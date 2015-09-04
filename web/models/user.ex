@@ -10,7 +10,7 @@ defmodule Bouncer.User do
     timestamps
   end
 
-  @required_fields ~w(email)
+  @required_fields ~w(application_id email)
   @optional_fields ~w(password id)
 
   @doc """
@@ -25,6 +25,7 @@ defmodule Bouncer.User do
     |> validate_format(:email, ~r/@/)
     |> update_change(:email, &String.downcase/1)
     |> validate_length(:password, min: 8)
+    |> foreign_key_constraint(:application_id)
     |> unique_constraint(:id, name: :users_pkey)
     |> unique_constraint(:email, name: :users_email_app_index)
     |> update_password_hash

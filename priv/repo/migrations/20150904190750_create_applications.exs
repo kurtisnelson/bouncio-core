@@ -3,10 +3,11 @@ defmodule Bouncer.Repo.Migrations.CreateApplications do
 
   def change do
     create table(:applications, primary_key: false) do
-      add :id, :binary_id, primary_key: true
+      add :id, :binary_id, primary_key: true, default: fragment("uuid_generate_v4()")
       add :name,:string
 
       timestamps
     end
+    execute "INSERT INTO applications (id, name, inserted_at, updated_at) VALUES ('00000000-0000-0000-0000-000000000000', 'internal', NOW(), NOW());"
   end
 end
