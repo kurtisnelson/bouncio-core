@@ -23,7 +23,7 @@ defmodule Bouncer.User do
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:email, ~r/@/)
     |> update_change(:email, &String.downcase/1)
-    |> validate_length(:password, min: 5)
+    |> validate_length(:password, min: 8)
     |> unique_constraint(:email)
   end
 end
