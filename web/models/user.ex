@@ -1,5 +1,6 @@
 defmodule Bouncer.User do
   use Bouncer.Web, :model
+  import Comeonin.Bcrypt, only: [hashpwsalt: 1]
 
   schema "users" do
     field :email, :string
@@ -9,8 +10,8 @@ defmodule Bouncer.User do
     timestamps
   end
 
-  @required_fields ~w(email password)
-  @optional_fields ~w(id)
+  @required_fields ~w(email)
+  @optional_fields ~w(password id)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -26,5 +27,17 @@ defmodule Bouncer.User do
     |> validate_length(:password, min: 8)
     |> unique_constraint(:id, name: :users_pkey)
     |> unique_constraint(:email, name: :users_email_app_index)
+    |> update_password_hash
+  end
+
+  def update_password_hash(changeset) do
+    case {changeset.params["password"], changeset.model.crypted_password} do
+      {nil, nil} ->
+        add_error(changeset, :password, "empty")
+      {nil, _} ->
+        changeset
+      {password, _} ->
+        put_change(changeset, :crypted_password, hashpwsalt(password))
+    end
   end
 end

@@ -31,7 +31,7 @@ defmodule Bouncer.UserControllerTest do
 
   test "creates and renders resource when data is valid", %{conn: conn} do
     conn = post conn, user_path(conn, :create), %{data: %{ type: "users", attributes: @valid_attrs }}
-    assert %{"data" => %{"id" => id} } = json_response(conn, 201)
+    assert %{"data" => %{"id" => _} } = json_response(conn, 201)
     assert Repo.get_by(User, email: @valid_attrs.email)
   end
 
@@ -50,7 +50,7 @@ defmodule Bouncer.UserControllerTest do
   test "updates and renders chosen resource when data is valid", %{conn: conn} do
     user = Repo.insert! %User{}
     conn = put conn, user_path(conn, :update, user), %{data: %{ type: "users", attributes: @valid_attrs }}
-    assert %{"data" => %{"id" => id}} = json_response(conn, 200)
+    assert %{"data" => %{"id" => _}} = json_response(conn, 200)
     assert Repo.get_by(User, email: @valid_attrs.email)
   end
 

@@ -2,6 +2,7 @@ defmodule Bouncer.UserController do
   use Bouncer.Web, :controller
 
   alias Bouncer.User
+  alias Ecto.Changeset
 
   def index(conn, _params) do
     users = Repo.all(User)
@@ -11,7 +12,6 @@ defmodule Bouncer.UserController do
   def create(conn, %{"data" => user_data}) do
     id = %{"id" => user_data["id"]}
     changeset = User.changeset(%User{}, Map.merge(id, user_data["attributes"]))
-
     case Repo.insert(changeset) do
       {:ok, user} ->
         conn
