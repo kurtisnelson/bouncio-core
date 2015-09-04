@@ -18,7 +18,8 @@ defmodule Bouncer.UserControllerTest do
   test "shows chosen resource", %{conn: conn} do
     user = Repo.insert! %User{}
     conn = get conn, user_path(conn, :show, user)
-    assert List.first(json_response(conn, 200)["data"])["id"] == user.id
+    %{id: id, email: email} = user
+    assert %{"data" => [%{"id" => ^id, "attributes" => %{"email" => ^email}}]} = json_response(conn, 200)
   end
 
   test "does not show resource and instead throw error when id is nonexistent", %{conn: conn} do
