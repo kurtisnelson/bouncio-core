@@ -33,6 +33,13 @@ defmodule Bouncer.UserControllerTest do
     assert Repo.get_by(User, email: @valid_attrs.email)
   end
 
+  test "creates and renders resource when ID is specified", %{conn: conn} do
+    id = Ecto.UUID.generate
+    conn = post conn, user_path(conn, :create), %{data: %{ id: id, type: "users", attributes: @valid_attrs }}
+    assert List.first(json_response(conn, 201)["data"])["id"] == id
+    assert Repo.get_by(User, email: @valid_attrs.email)
+  end
+
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
     conn = post conn, user_path(conn, :create), %{data: %{ type: "users", attributes: @invalid_attrs }}
     assert json_response(conn, 422)["errors"] != %{}

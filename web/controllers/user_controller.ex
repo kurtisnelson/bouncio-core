@@ -8,8 +8,9 @@ defmodule Bouncer.UserController do
     render(conn, "index.json", data: users)
   end
 
-  def create(conn, %{"data" => %{"attributes" => user_attrs}}) do
-    changeset = User.changeset(%User{}, user_attrs)
+  def create(conn, %{"data" => user_data}) do
+    id = %{"id" => user_data["id"]}
+    changeset = User.changeset(%User{}, Map.merge(id, user_data["attributes"]))
 
     case Repo.insert(changeset) do
       {:ok, user} ->

@@ -10,7 +10,7 @@ defmodule Bouncer.User do
   end
 
   @required_fields ~w(email password)
-  @optional_fields ~w()
+  @optional_fields ~w(id)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
