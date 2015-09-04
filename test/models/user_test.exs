@@ -15,4 +15,10 @@ defmodule Bouncer.UserTest do
     changeset = User.changeset(%User{}, @invalid_attrs)
     refute changeset.valid?
   end
+
+  test "disallows duplicate emails in same app" do
+    changeset = User.changeset(%User{}, @valid_attrs)
+    Repo.insert!(changeset)
+    refute changeset.valid?
+  end
 end

@@ -1,11 +1,11 @@
 defmodule Bouncer.User do
   use Bouncer.Web, :model
 
-  @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "users" do
     field :email, :string
     field :password, :string, virtual: true
     field :crypted_password, :string
+    belongs_to :application, Bouncer.Application
     timestamps
   end
 
@@ -24,6 +24,7 @@ defmodule Bouncer.User do
     |> validate_format(:email, ~r/@/)
     |> update_change(:email, &String.downcase/1)
     |> validate_length(:password, min: 8)
-    |> unique_constraint(:email)
+    |> unique_constraint(:id, name: :users_pkey)
+    |> unique_constraint(:email, name: :users_email_app_index)
   end
 end

@@ -19,6 +19,8 @@ defmodule Bouncer.Web do
   def model do
     quote do
       use Ecto.Model
+      @primary_key {:id, :binary_id, autogenerate: true}
+      @foreign_key_type :binary_id
     end
   end
 
