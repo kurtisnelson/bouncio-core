@@ -14,7 +14,9 @@ defmodule Bouncer.ChangesetView do
   end
 
   def render_detail({message, values}) do
-    message
+    Enum.reduce values, message, fn {k, v}, acc ->
+      String.replace(acc, "%{#{k}}", to_string(v))
+    end
   end
 
   def render_detail(message) do

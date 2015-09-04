@@ -4,6 +4,7 @@ defmodule Bouncer.UserControllerTest do
   alias Bouncer.User
   @valid_attrs %{email: "kurt@example.com", password: "12345678"}
   @invalid_attrs %{email: "kurt", password: "1234"}
+  @password_error %{"detail" => "should be at least 8 characters", "source" => %{"pointer" => "/data/attributes/password"}, "title" => "Invalid Attribute"}
 
   setup do
     conn = conn() |> put_req_header("accept", "application/json")
@@ -12,7 +13,7 @@ defmodule Bouncer.UserControllerTest do
 
   test "lists all entries on index", %{conn: conn} do
     conn = get conn, user_path(conn, :index)
-    assert json_response(conn, 200)["data"] == []
+    assert %{"data" => []} = json_response(conn, 200)
   end
 
   test "shows chosen resource", %{conn: conn} do
@@ -43,7 +44,7 @@ defmodule Bouncer.UserControllerTest do
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
     conn = post conn, user_path(conn, :create), %{data: %{ type: "users", attributes: @invalid_attrs }}
-    assert json_response(conn, 422)["errors"] != %{}
+    assert %{"errors" => [@password_error, _]} = json_response(conn, 422)
   end
 
   test "updates and renders chosen resource when data is valid", %{conn: conn} do
@@ -56,7 +57,7 @@ defmodule Bouncer.UserControllerTest do
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
     user = Repo.insert! %User{}
     conn = put conn, user_path(conn, :update, user), %{data: %{ type: "users", attributes: @invalid_attrs }}
-    assert json_response(conn, 422)["errors"] != %{}
+    assert %{"errors" => [@password_error, _]} = json_response(conn, 422)
   end
 
   test "deletes chosen resource", %{conn: conn} do
