@@ -2,7 +2,8 @@ defmodule Bouncer.UserControllerTest do
   use Bouncer.ConnCase
 
   alias Bouncer.User
-  @valid_attrs %{application_id: "00000000-0000-0000-0000-000000000000", email: "kurt@example.com", password: "12345678"}
+  @valid_attrs %{email: "kurt@example.com", password: "12345678"}
+  @valid_relationships %{app: %{data: %{id: "00000000-0000-0000-0000-000000000000" } } }
   @invalid_attrs %{email: "kurt", password: "1234"}
   @password_error %{"detail" => "should be at least 8 characters", "source" => %{"pointer" => "/data/attributes/password"}, "title" => "Invalid Attribute"}
 
@@ -30,14 +31,14 @@ defmodule Bouncer.UserControllerTest do
   end
 
   test "creates and renders resource when data is valid", %{conn: conn} do
-    conn = post conn, user_path(conn, :create), %{data: %{ type: "users", attributes: @valid_attrs }}
+    conn = post conn, user_path(conn, :create), %{data: %{ type: "users", attributes: @valid_attrs, relationships: @valid_relationships }}
     assert %{"data" => %{"id" => _} } = json_response(conn, 201)
     assert Repo.get_by(User, email: @valid_attrs.email)
   end
 
   test "creates and renders resource when ID is specified", %{conn: conn} do
     id = Ecto.UUID.generate
-    conn = post conn, user_path(conn, :create), %{data: %{ id: id, type: "users", attributes: @valid_attrs }}
+    conn = post conn, user_path(conn, :create), %{data: %{ id: id, type: "users", attributes: @valid_attrs, relationships: @valid_relationships }}
     assert %{"data" => %{"id" => ^id}} = json_response(conn, 201)
     assert Repo.get_by(User, email: @valid_attrs.email)
   end
@@ -49,7 +50,7 @@ defmodule Bouncer.UserControllerTest do
 
   test "updates and renders chosen resource when data is valid", %{conn: conn} do
     user = Repo.insert! %User{}
-    conn = put conn, user_path(conn, :update, user), %{data: %{ type: "users", attributes: @valid_attrs }}
+    conn = put conn, user_path(conn, :update, user), %{data: %{ type: "users", attributes: @valid_attrs, relationships: @valid_relationships }}
     assert %{"data" => %{"id" => _}} = json_response(conn, 200)
     assert Repo.get_by(User, email: @valid_attrs.email)
   end

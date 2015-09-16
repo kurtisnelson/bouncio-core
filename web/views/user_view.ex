@@ -10,6 +10,6 @@ defmodule Bouncer.UserView do
   end
 
   def render("user.json", %{user: user}) do
-    %{id: user.id, type: "users", attributes: %{ application_id: user.application_id, email: user.email }}
+    %{id: user.id, type: "users", attributes: %{ email: user.email }, relationships: %{app: %{data: %{id: user.app_id, type: "apps"}}}}
   end
 end

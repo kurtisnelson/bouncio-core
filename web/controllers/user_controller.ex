@@ -10,9 +10,7 @@ defmodule Bouncer.UserController do
   end
 
   def create(conn, %{"data" => user_data}) do
-    id = %{"id" => user_data["id"]}
-    changeset = User.changeset(%User{}, Map.merge(id, user_data["attributes"]))
-    case Repo.insert(changeset) do
+    case Repo.insert(User.changeset(%User{}, parse_payload(user_data))) do
       {:ok, user} ->
         conn
         |> put_status(:created)
@@ -29,11 +27,9 @@ defmodule Bouncer.UserController do
     render conn, "show.json", data: user
   end
 
-  def update(conn, %{"id" => id, "data" => %{"attributes" => user_attrs}}) do
+  def update(conn, %{"id" => id, "data" => user_data}) do
     user = Repo.get!(User, id)
-    changeset = User.changeset(user, user_attrs)
-
-    case Repo.update(changeset) do
+    case Repo.update(User.changeset(user, parse_payload(user_data))) do
       {:ok, user} ->
         render(conn, "show.json", data: user)
       {:error, changeset} ->
@@ -49,5 +45,16 @@ defmodule Bouncer.UserController do
     Repo.delete!(user)
 
     send_resp(conn, :no_content, "")
+  end
+
+  def parse_payload(data) do
+    case data["id"] do
+      nil ->
+        changemap = %{}
+      id ->
+        changemap = %{"id" => id}
+    end
+    changemap = Map.merge(changemap, data["attributes"])
+    Map.merge(changemap, %{"app_id" => data["relationships"]["app"]["data"]["id"]})
   end
 end

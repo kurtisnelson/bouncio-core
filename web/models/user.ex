@@ -6,11 +6,11 @@ defmodule Bouncer.User do
     field :email, :string
     field :password, :string, virtual: true
     field :crypted_password, :string
-    belongs_to :application, Bouncer.Application
+    belongs_to :app, Bouncer.App
     timestamps
   end
 
-  @required_fields ~w(application_id email)
+  @required_fields ~w(app_id email)
   @optional_fields ~w(password id)
 
   @doc """
@@ -25,7 +25,7 @@ defmodule Bouncer.User do
     |> validate_format(:email, ~r/@/)
     |> update_change(:email, &String.downcase/1)
     |> validate_length(:password, min: 8)
-    |> foreign_key_constraint(:application_id)
+    |> foreign_key_constraint(:app_id)
     |> unique_constraint(:id, name: :users_pkey)
     |> unique_constraint(:email, name: :users_email_app_index)
     |> update_password_hash

@@ -1,7 +1,7 @@
-defmodule Bouncer.Application do
+defmodule Bouncer.App do
   use Bouncer.Web, :model
 
-  schema "applications" do
+  schema "apps" do
     field :name, :string
     has_many :users, Bouncer.User
     timestamps
@@ -13,6 +13,6 @@ defmodule Bouncer.Application do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> unique_constraint(:id, name: :application_pkey)
+    |> unique_constraint(:id, name: :user_app_pkey)
   end
 end

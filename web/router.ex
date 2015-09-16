@@ -16,6 +16,7 @@ defmodule Bouncer.Router do
   scope "/", Bouncer do
     pipe_through :api
     resources "/users", UserController, except: [:new]
+    resources "/apps", AppController, except: [:new]
     post "/session", SessionController, :new
     delete "/session", SessionController, :delete
     get "/session", SessionController, :show
