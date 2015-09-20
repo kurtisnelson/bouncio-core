@@ -17,7 +17,7 @@ defmodule Bouncio.Router do
     pipe_through :api
     resources "/users", UserController, except: [:new]
     resources "/apps", AppController, except: [:new]
-    post "/session", SessionController, :new
+    post "/session", SessionController, :create
     delete "/session", SessionController, :delete
     get "/session", SessionController, :show
   end

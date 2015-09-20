@@ -1,11 +1,11 @@
-defmodule Blog.Session do
+defmodule Bouncio.Session do
   import MultiDef
-  alias Blog.User
+  alias Bouncer.User
 
   def login(params, repo) do
-    user = repo.get_by(User, email: String.downcase(params["email"]))
+    user = repo.get_by(User, email: String.downcase(params["username"]))
     case authenticate(user, params["password"]) do
-      true -> {:ok, user}
+      true -> {:ok, new_session(user)}
       _    -> :error
     end
   end
@@ -13,5 +13,9 @@ defmodule Blog.Session do
   mdef authenticate do
     nil, _ -> false
     user, password -> Comeonin.Bcrypt.checkpw(password, user.crypted_password)
+  end
+
+  def new_session(user) do
+    %{user_id: user.id}
   end
 end
