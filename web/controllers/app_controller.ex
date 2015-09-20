@@ -1,7 +1,7 @@
-defmodule Bouncer.AppController do
-  use Bouncer.Web, :controller
+defmodule Bouncio.AppController do
+  use Bouncio.Web, :controller
 
-  alias Bouncer.App
+  alias Bouncio.App
   alias Ecto.Changeset
 
   def index(conn, _params) do

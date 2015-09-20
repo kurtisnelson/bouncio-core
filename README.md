@@ -1,4 +1,4 @@
-# Bouncer
+# Bouncio
 
 To start your Phoenix app:
 

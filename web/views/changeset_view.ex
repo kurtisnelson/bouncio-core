@@ -1,5 +1,5 @@
-defmodule Bouncer.ChangesetView do
-  use Bouncer.Web, :view
+defmodule Bouncio.ChangesetView do
+  use Bouncio.Web, :view
 
   def render("error.json", %{changeset: changeset}) do
     %{errors: Enum.map(changeset.errors, fn {field, detail} ->

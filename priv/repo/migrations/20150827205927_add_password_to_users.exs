@@ -1,4 +1,4 @@
-defmodule Bouncer.Repo.Migrations.AddPasswordToUsers do
+defmodule Bouncio.Repo.Migrations.AddPasswordToUsers do
   use Ecto.Migration
 
   def change do

@@ -1,5 +1,5 @@
-defmodule Bouncer.ErrorView do
-  use Bouncer.Web, :view
+defmodule Bouncio.ErrorView do
+  use Bouncio.Web, :view
 
   def render("404.html", _assigns) do
     "Page not found"

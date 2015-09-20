@@ -1,9 +1,9 @@
-defmodule Bouncer.App do
-  use Bouncer.Web, :model
+defmodule Bouncio.App do
+  use Bouncio.Web, :model
 
   schema "apps" do
     field :name, :string
-    has_many :users, Bouncer.User
+    has_many :users, Bouncio.User
     timestamps
   end
 

@@ -1,4 +1,4 @@
-defmodule Bouncer.ModelCase do
+defmodule Bouncio.ModelCase do
   @moduledoc """
   This module defines the test case to be used by
   model tests.
@@ -16,16 +16,16 @@ defmodule Bouncer.ModelCase do
 
   using do
     quote do
-      alias Bouncer.Repo
+      alias Bouncio.Repo
       import Ecto.Model
       import Ecto.Query, only: [from: 2]
-      import Bouncer.ModelCase
+      import Bouncio.ModelCase
     end
   end
 
   setup tags do
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Bouncer.Repo, [])
+      Ecto.Adapters.SQL.restart_test_transaction(Bouncio.Repo, [])
     end
 
     :ok

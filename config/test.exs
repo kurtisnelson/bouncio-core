@@ -2,7 +2,7 @@ use Mix.Config
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :bouncer, Bouncer.Endpoint,
+config :bouncio, Bouncio.Endpoint,
   http: [port: 4001],
   server: true
 
@@ -13,7 +13,7 @@ config :logger, level: :warn
 config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
-config :bouncer, Bouncer.Repo,
+config :bouncio, Bouncio.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: "bouncer_test",
   username: "postgres",

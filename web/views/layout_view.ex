@@ -1,3 +1,3 @@
-defmodule Bouncer.LayoutView do
-  use Bouncer.Web, :view
+defmodule Bouncio.LayoutView do
+  use Bouncio.Web, :view
 end

@@ -1,12 +1,12 @@
-defmodule Bouncer.User do
-  use Bouncer.Web, :model
+defmodule Bouncio.User do
+  use Bouncio.Web, :model
   import Comeonin.Bcrypt, only: [hashpwsalt: 1]
 
   schema "users" do
     field :email, :string
     field :password, :string, virtual: true
     field :crypted_password, :string
-    belongs_to :app, Bouncer.App
+    belongs_to :app, Bouncio.App
     timestamps
   end
 

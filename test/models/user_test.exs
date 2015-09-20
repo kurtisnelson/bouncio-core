@@ -1,7 +1,7 @@
-defmodule Bouncer.UserTest do
-  use Bouncer.ModelCase
+defmodule Bouncio.UserTest do
+  use Bouncio.ModelCase
 
-  alias Bouncer.User
+  alias Bouncio.User
 
   @valid_attrs %{app_id: "00000000-0000-0000-0000-000000000000", email: "kurt@example.com", password: "12345678"}
   @invalid_attrs %{password: "1234"}
@@ -23,8 +23,8 @@ defmodule Bouncer.UserTest do
   end
 
   test "allows dupe emails across app" do
-    app1 = Repo.insert!(Bouncer.App.changeset(%Bouncer.App{}, %{name: "app1"}))
-    app2 = Repo.insert!(Bouncer.App.changeset(%Bouncer.App{}, %{name: "app2"}))
+    app1 = Repo.insert!(Bouncio.App.changeset(%Bouncio.App{}, %{name: "app1"}))
+    app2 = Repo.insert!(Bouncio.App.changeset(%Bouncio.App{}, %{name: "app2"}))
     changeset = User.changeset(%User{}, %{email: "kurt@example.com", app_id: app1.id, password: "12345678"})
     changeset2 = User.changeset(%User{}, %{email: "kurt@example.com", app_id: app2.id, password: "12345678"})
     assert {:ok, _} = Repo.insert(changeset)

@@ -1,7 +1,7 @@
-defmodule Bouncer.UserController do
-  use Bouncer.Web, :controller
+defmodule Bouncio.UserController do
+  use Bouncio.Web, :controller
 
-  alias Bouncer.User
+  alias Bouncio.User
   alias Ecto.Changeset
 
   def index(conn, _params) do
@@ -18,7 +18,7 @@ defmodule Bouncer.UserController do
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(Bouncer.ChangesetView, "error.json", changeset: changeset)
+        |> render(Bouncio.ChangesetView, "error.json", changeset: changeset)
     end
   end
 
@@ -35,7 +35,7 @@ defmodule Bouncer.UserController do
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(Bouncer.ChangesetView, "error.json", changeset: changeset)
+        |> render(Bouncio.ChangesetView, "error.json", changeset: changeset)
     end
   end
 

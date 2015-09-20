@@ -1,12 +1,12 @@
-defmodule Bouncer.Web do
+defmodule Bouncio.Web do
   @moduledoc """
   A module that keeps using definitions for controllers,
   views and so on.
 
   This can be used in your application as:
 
-      use Bouncer.Web, :controller
-      use Bouncer.Web, :view
+      use Bouncio.Web, :controller
+      use Bouncio.Web, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -28,11 +28,11 @@ defmodule Bouncer.Web do
     quote do
       use Phoenix.Controller
 
-      alias Bouncer.Repo
+      alias Bouncio.Repo
       import Ecto.Model
       import Ecto.Query, only: [from: 2]
 
-      import Bouncer.Router.Helpers
+      import Bouncio.Router.Helpers
     end
   end
 
@@ -46,7 +46,7 @@ defmodule Bouncer.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import Bouncer.Router.Helpers
+      import Bouncio.Router.Helpers
     end
   end
 
@@ -60,7 +60,7 @@ defmodule Bouncer.Web do
     quote do
       use Phoenix.Channel
 
-      alias Bouncer.Repo
+      alias Bouncio.Repo
       import Ecto.Model
       import Ecto.Query, only: [from: 2]
 

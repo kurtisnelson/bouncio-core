@@ -1,4 +1,4 @@
-defmodule Bouncer.Repo.Migrations.LinkUserToApplication do
+defmodule Bouncio.Repo.Migrations.LinkUserToApplication do
   use Ecto.Migration
 
   def change do

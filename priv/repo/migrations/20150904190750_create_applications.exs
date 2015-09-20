@@ -1,4 +1,4 @@
-defmodule Bouncer.Repo.Migrations.CreateApplications do
+defmodule Bouncio.Repo.Migrations.CreateApplications do
   use Ecto.Migration
 
   def change do

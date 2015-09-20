@@ -1,5 +1,5 @@
-defmodule Bouncer.Router do
-  use Bouncer.Web, :router
+defmodule Bouncio.Router do
+  use Bouncio.Web, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -13,7 +13,7 @@ defmodule Bouncer.Router do
     plug :accepts, ["json-api", "json"]
   end
 
-  scope "/", Bouncer do
+  scope "/", Bouncio do
     pipe_through :api
     resources "/users", UserController, except: [:new]
     resources "/apps", AppController, except: [:new]

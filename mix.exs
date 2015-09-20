@@ -1,8 +1,8 @@
-defmodule Bouncer.Mixfile do
+defmodule Bouncio.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :bouncer,
+    [app: :bouncio,
      version: "0.0.1",
      elixir: "~> 1.0",
      elixirc_paths: elixirc_paths(Mix.env),
@@ -16,7 +16,7 @@ defmodule Bouncer.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [mod: {Bouncer, []},
+    [mod: {Bouncio, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger,
                     :phoenix_ecto, :postgrex, :comeonin]]
   end

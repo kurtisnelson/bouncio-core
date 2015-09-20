@@ -1,4 +1,4 @@
-defmodule Bouncer.ChannelCase do
+defmodule Bouncio.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -20,19 +20,19 @@ defmodule Bouncer.ChannelCase do
       # Import conveniences for testing with channels
       use Phoenix.ChannelTest
 
-      alias Bouncer.Repo
+      alias Bouncio.Repo
       import Ecto.Model
       import Ecto.Query, only: [from: 2]
 
 
       # The default endpoint for testing
-      @endpoint Bouncer.Endpoint
+      @endpoint Bouncio.Endpoint
     end
   end
 
   setup tags do
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Bouncer.Repo, [])
+      Ecto.Adapters.SQL.restart_test_transaction(Bouncio.Repo, [])
     end
 
     :ok

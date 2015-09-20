@@ -1,8 +1,8 @@
-defmodule Bouncer.SessionController do
-  use Bouncer.Web, :controller
+defmodule Bouncio.SessionController do
+  use Bouncio.Web, :controller
 
   def create(conn, %{"session" => session_params}) do
-    case Bouncer.Session.login(session_params, Repo) do
+    case Bouncio.Session.login(session_params, Repo) do
       {:ok, session} ->
         conn
         |> put_session(:current_user, session.user_id)

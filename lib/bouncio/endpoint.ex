@@ -1,14 +1,14 @@
-defmodule Bouncer.Endpoint do
-  use Phoenix.Endpoint, otp_app: :bouncer
+defmodule Bouncio.Endpoint do
+  use Phoenix.Endpoint, otp_app: :bouncio
 
-  socket "/socket", Bouncer.UserSocket
+  socket "/socket", Bouncio.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :bouncer, gzip: false,
+    at: "/", from: :bouncio, gzip: true,
     only: ~w(css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
@@ -32,9 +32,9 @@ defmodule Bouncer.Endpoint do
 
   plug Plug.Session,
     store: :cookie,
-    key: "_bouncer_key",
+    key: "_bouncio_key",
     signing_salt: "7bI3Bmyd"
 
   plug CORSPlug, [origin: '*']
-  plug Bouncer.Router
+  plug Bouncio.Router
 end

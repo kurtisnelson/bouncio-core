@@ -1,7 +1,7 @@
-defmodule Bouncer.UserControllerTest do
-  use Bouncer.ConnCase
+defmodule Bouncio.UserControllerTest do
+  use Bouncio.ConnCase
 
-  alias Bouncer.User
+  alias Bouncio.User
   @valid_attrs %{email: "kurt@example.com", password: "12345678"}
   @valid_relationships %{app: %{data: %{id: "00000000-0000-0000-0000-000000000000" } } }
   @invalid_attrs %{email: "kurt", password: "1234"}
