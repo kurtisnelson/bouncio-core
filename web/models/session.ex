@@ -19,6 +19,6 @@ defmodule Bouncio.Session do
   end
 
   def build_session(user) do
-    %{access_token: "", refresh_token: "", expires_in: 3600, token_type: "Bearer", id_token: "", user_id: user.id}
+    %{access_token: "foo", refresh_token: "bar", expires_in: 3600, token_type: "Bearer", id_token: "", user_id: user.id}
   end
 end
