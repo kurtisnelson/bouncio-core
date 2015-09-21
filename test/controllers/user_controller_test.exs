@@ -3,7 +3,7 @@ defmodule Bouncio.UserControllerTest do
 
   alias Bouncio.User
   @valid_attrs %{email: "kurt@example.com", password: "12345678"}
-  @valid_relationships %{app: %{data: %{id: "00000000-0000-0000-0000-000000000000" } } }
+  @valid_relationships %{app: %{data: %{id: Bouncio.App.internal_id } } }
   @invalid_attrs %{email: "kurt", password: "1234"}
   @password_error %{"detail" => "should be at least 8 characters", "source" => %{"pointer" => "/data/attributes/password"}, "title" => "Invalid Attribute"}
 

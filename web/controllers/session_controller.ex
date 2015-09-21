@@ -10,10 +10,11 @@ defmodule Bouncio.SessionController do
         |> fetch_session
         |> put_session(:current_user, session.user_id)
         |> put_status(:created)
-        |> render("show.json", session: session)
+        |> json session
       :error ->
         conn
-        |> put_status(:unauthorized)
+        |> put_status(:bad_request)
+        |> json %{error: "invalid_request"}
     end
   end
 

@@ -1,6 +1,6 @@
 defmodule Bouncio.Session do
   import MultiDef
-  alias Bouncer.User
+  alias Bouncio.User
 
   def login(params, repo) do
     user = repo.get_by(User, email: String.downcase(params["username"]))

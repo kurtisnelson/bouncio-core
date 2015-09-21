@@ -1,5 +1,7 @@
 defmodule Bouncio.App do
   use Bouncio.Web, :model
+  @internal_id "00000000-0000-0000-0000-000000000000"
+  def internal_id, do: @internal_id
 
   schema "apps" do
     field :name, :string
