@@ -18,7 +18,7 @@ defmodule Bouncio.UserControllerTest do
   end
 
   test "shows chosen resource", %{conn: conn} do
-    user = Repo.insert! %User{}
+    {:ok, user} = Forge.saved_user(Repo)
     conn = get conn, user_path(conn, :show, user)
     %{id: id, email: email} = user
     assert %{"data" => %{"id" => ^id, "attributes" => %{"email" => ^email}}} = json_response(conn, 200)
@@ -49,20 +49,20 @@ defmodule Bouncio.UserControllerTest do
   end
 
   test "updates and renders chosen resource when data is valid", %{conn: conn} do
-    user = Repo.insert! %User{}
+    {:ok, user} = Forge.saved_user(Repo)
     conn = put conn, user_path(conn, :update, user), %{data: %{ type: "users", attributes: @valid_attrs, relationships: @valid_relationships }}
     assert %{"data" => %{"id" => _}} = json_response(conn, 200)
     assert Repo.get_by(User, email: @valid_attrs.email)
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    user = Repo.insert! %User{}
+    {:ok, user} = Forge.saved_user(Repo)
     conn = put conn, user_path(conn, :update, user), %{data: %{ type: "users", attributes: @invalid_attrs }}
     assert %{"errors" => [@password_error, _, _]} = json_response(conn, 422)
   end
 
   test "deletes chosen resource", %{conn: conn} do
-    user = Repo.insert! %User{}
+    {:ok, user} = Forge.saved_user(Repo)
     conn = delete conn, user_path(conn, :delete, user)
     assert response(conn, 204)
     refute Repo.get(User, user.id)

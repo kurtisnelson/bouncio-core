@@ -38,6 +38,7 @@ defmodule Bouncio.Mixfile do
      {:comeonin, "~> 1.1"},
      {:cors_plug, "~> 0.1.3"},
      {:multidef, "> 0.0.0"},
+     {:blacksmith, "~> 0.1", only: :test},
    ]
   end
 end

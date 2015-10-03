@@ -2,7 +2,6 @@ defmodule Bouncio.UserController do
   use Bouncio.Web, :controller
 
   alias Bouncio.User
-  alias Ecto.Changeset
 
   def index(conn, _params) do
     users = Repo.all(User)

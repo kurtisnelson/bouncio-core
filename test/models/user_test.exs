@@ -3,7 +3,7 @@ defmodule Bouncio.UserTest do
 
   alias Bouncio.User
 
-  @valid_attrs %{app_id: "00000000-0000-0000-0000-000000000000", email: "kurt@example.com", password: "12345678"}
+  @valid_attrs %{app_id: Bouncio.App.internal_id, email: "kurt@example.com", password: "12345678"}
   @invalid_attrs %{password: "1234"}
 
   test "changeset with valid attributes" do
@@ -38,15 +38,16 @@ defmodule Bouncio.UserTest do
   end
 
   test "existing password does not get destroyed" do
-    {:ok, user} = Repo.insert(%User{email: "kurt@example.com", crypted_password: "stuff"})
+    {:ok, user} = Forge.saved_user(Repo, crypted_password: "stuff")
     changeset = User.changeset(user, %{app_id: "00000000-0000-0000-0000-000000000000", email: "kurt2@example.com"})
     {:ok, user} = Repo.update(changeset)
     assert user.crypted_password == "stuff"
+    assert user.email == "kurt2@example.com"
   end
 
   test "password can be updated" do
-    {:ok, user} = Repo.insert(%User{app_id: "00000000-0000-0000-0000-000000000000", email: "kurt@example.com", crypted_password: "stuff"})
-    changeset = User.changeset(user, %{email: "kurt2@example.com", password: "12345678"})
+    {:ok, user} = Forge.saved_user(Repo, crypted_password: "stuff")
+    changeset = User.changeset(user, %{password: "12345678"})
     {:ok, user} = Repo.update(changeset)
     assert user.crypted_password != "stuff"
   end
