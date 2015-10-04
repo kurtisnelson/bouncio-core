@@ -44,14 +44,23 @@ defmodule Bouncio.Session do
     token -> validate_session(Repo.get_by(Session, refresh_token: token))
   end
 
-  def from_params(params) do
-    user = Repo.get_by(User, email: String.downcase(params["username"]))
-    from_password(user, params["password"])
+  def from_params(%{"grant_type" => "refresh_token", "refresh_token" => refresh}) do
+    case from_refresh(refresh) do
+      {:ok, session} ->
+        refresh(session)
+      _ ->
+        :error
+    end
+  end
+
+  def from_params(%{"grant_type" => "password", "username" => username, "password" => password}) do
+    user = Repo.get_by(User, email: String.downcase(username))
+    from_password(user, password)
   end
 
   def from_password(user, password) do
     case authenticate(user, password) do
-      true -> build_session(user)
+      true -> new(user)
       _    -> :error
     end
   end
@@ -61,7 +70,7 @@ defmodule Bouncio.Session do
     user, password -> Comeonin.Bcrypt.checkpw(password, user.crypted_password)
   end
 
-  def build_session(user) do
+  def new(user) do
     Bouncio.Repo.insert(Session.changeset(%Session{}, %{user_id: user.id}))
   end
 
@@ -79,8 +88,7 @@ defmodule Bouncio.Session do
   end
 
   defp update_expires_at(changeset) do
-    expires_at = Date.now |> Date.add(Time.to_timestamp(2, :hours))
-    changeset |> put_change(:expires_at, expires_at)
+    changeset |> put_change(:expires_at, expiry_time(2, :hours))
   end
 
   defp generate_token(changeset, field) do
@@ -89,5 +97,16 @@ defmodule Bouncio.Session do
 
   defp random_token do
     :crypto.strong_rand_bytes(32) |> :base64.encode_to_string |> to_string
+  end
+
+  defp expiry_time(n, unit) do
+    Date.now |> Date.add(Time.to_timestamp(n, unit))
+  end
+
+  defp refresh(session) do
+    session = %{session | access_token: random_token}
+    session = %{session | refresh_token: random_token}
+    session = %{session | expires_at: expiry_time(2, :hours)}
+    Bouncio.Repo.update(session)
   end
 end
