@@ -36,22 +36,30 @@ defmodule Bouncio.SessionController do
   end
 
   def delete(conn, _) do
-    token = conn |> get_req_header("authorization") |> List.first |> String.split(" ") |> List.last
-    case Session.from_bearer(token) do
-      {:ok, session} ->
-        Repo.delete!(session)
-        conn
-        |> put_status(:no_content)
-        |> json ""
-      _ ->
-        conn
-        |> put_status(:bad_request)
-        |> json %{error: "invalid_request"}
+    conn |> get_req_header("authorization") |> List.first |> String.split(" ") |> List.last |> Session.from_bearer |> destroy_session(conn)
+  end
+
+  def revoke(conn, %{"token_type_hint" => type, "token" => token}) do
+    case type do
+      "refresh_token" ->
+        token |> Session.from_refresh |> destroy_session(conn)
+      "access_token" ->
+        token |> Session.from_bearer |> destroy_session(conn)
     end
   end
 
   defp secure_cache_headers(conn, _) do
     Plug.Conn.put_resp_header(conn, "cache-control", "no-store, private")
     Plug.Conn.put_resp_header(conn, "pragma", "no-cache")
+  end
+
+  defp destroy_session(session_result, conn) do
+    case session_result do
+      {:ok, session} ->
+        Repo.delete!(session)
+    end
+    conn
+    |> put_status(:no_content)
+    |> json ""
   end
 end

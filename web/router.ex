@@ -19,6 +19,7 @@ defmodule Bouncio.Router do
     resources "/apps", AppController, except: [:new]
     post "/session", SessionController, :create
     delete "/session", SessionController, :delete
+    post "/session/revoke", SessionController, :revoke
     get "/session", SessionController, :show
   end
 end

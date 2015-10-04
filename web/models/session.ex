@@ -39,11 +39,16 @@ defmodule Bouncio.Session do
     token -> validate_session(Repo.get_by(Session, access_token: token))
   end
 
+  mdef from_refresh do
+    nil -> :error
+    token -> validate_session(Repo.get_by(Session, refresh_token: token))
+  end
+
   def from_params(params) do
     user = Repo.get_by(User, email: String.downcase(params["username"]))
     from_password(user, params["password"])
   end
-  
+
   def from_password(user, password) do
     case authenticate(user, password) do
       true -> build_session(user)
