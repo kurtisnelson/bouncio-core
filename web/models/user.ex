@@ -1,5 +1,6 @@
 defmodule Bouncio.User do
   use Bouncio.Web, :model
+  import MultiDef
   import Comeonin.Bcrypt, only: [hashpwsalt: 1]
 
   schema "users" do
@@ -32,13 +33,12 @@ defmodule Bouncio.User do
   end
 
   def update_password_hash(changeset) do
-    case {changeset.params["password"], changeset.model.crypted_password} do
-      {nil, nil} ->
-        add_error(changeset, :password, "empty")
-      {nil, _} ->
-        changeset
-      {password, _} ->
-        put_change(changeset, :crypted_password, hashpwsalt(password))
-    end
+    update_password_hash(changeset, changeset.params["password"], changeset.model.crypted_password)
+  end
+
+  mdef update_password_hash do
+    changeset, nil, nil -> changeset |> add_error(:password, "empty")
+    changeset, nil, _ -> changeset
+    changeset, password, _ -> changeset |> put_change(:crypted_password, hashpwsalt(password))
   end
 end

@@ -5,7 +5,7 @@ defmodule Bouncio.SessionController do
   plug :secure_cache_headers
 
   def create(conn, session_params) do
-    case Session.login(session_params, Repo) do
+    case Session.from_params(session_params) do
       {:ok, session} ->
         conn
         |> fetch_session
@@ -21,11 +21,21 @@ defmodule Bouncio.SessionController do
     end
   end
 
-  def show(conn) do
-
+  def show(conn, _) do
+    token = conn |> get_req_header("authorization") |> List.first |> String.split(" ") |> List.last
+    case Session.from_bearer(token) do
+      {:ok, session} ->
+        conn
+        |> put_status(:ok)
+        |> render "show.json", session: session
+      _ ->
+        conn
+        |> put_status(:bad_request)
+        |> json %{error: "invalid_request"}
+    end
   end
 
-  def delete(conn) do
+  def delete(_) do
 
   end
 

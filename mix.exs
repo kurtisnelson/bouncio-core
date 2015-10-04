@@ -37,6 +37,8 @@ defmodule Bouncio.Mixfile do
      {:cowboy, "~> 1.0"},
      {:comeonin, "~> 1.1"},
      {:cors_plug, "~> 0.1.3"},
+     {:timex, "~> 0.19.5"},
+     {:timex_ecto, "~> 0.5.0"},
      {:multidef, "> 0.0.0"},
      {:blacksmith, "~> 0.1", only: :test},
    ]
