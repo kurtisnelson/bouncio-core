@@ -36,7 +36,7 @@ defmodule Bouncio.Session do
 
   mdef from_bearer do
     nil -> :error
-    token -> {:ok, Repo.get_by(Session, access_token: token)}
+    token -> validate_session(Repo.get_by(Session, access_token: token))
   end
 
   def from_params(params) do
@@ -58,6 +58,19 @@ defmodule Bouncio.Session do
 
   def build_session(user) do
     Bouncio.Repo.insert(Session.changeset(%Session{}, %{user_id: user.id}))
+  end
+
+  defp validate_session(session) when is_nil(session) do
+    :error
+  end
+
+  defp validate_session(session) do
+    case expires_in(session) > 0 do
+      true ->
+        {:ok, session}
+      _ ->
+        :error
+    end
   end
 
   defp update_expires_at(changeset) do
