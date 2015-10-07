@@ -22,7 +22,7 @@ defmodule Bouncio.SessionController do
   end
 
   def show(conn, _) do
-    token = conn |> get_req_header("authorization") |> List.first |> String.split(" ") |> List.last
+    token = conn |> get_req_header("authorization") |> parse_token_header
     case Session.from_bearer(token) do
       {:ok, session} ->
         conn
@@ -36,7 +36,7 @@ defmodule Bouncio.SessionController do
   end
 
   def delete(conn, _) do
-    conn |> get_req_header("authorization") |> List.first |> String.split(" ") |> List.last |> Session.from_bearer |> destroy_session(conn)
+    conn |> get_req_header("authorization") |> parse_token_header |> Session.from_bearer |> destroy_session(conn)
   end
 
   def revoke(conn, %{"token_type_hint" => type, "token" => token}) do
@@ -62,4 +62,7 @@ defmodule Bouncio.SessionController do
     |> put_status(:no_content)
     |> json ""
   end
+
+  defp parse_token_header(["Bearer " <> token]), do: token
+  defp parse_token_header(_), do: ""
 end

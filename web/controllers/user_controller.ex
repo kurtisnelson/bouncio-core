@@ -1,7 +1,8 @@
 defmodule Bouncio.UserController do
   use Bouncio.Web, :controller
-
   alias Bouncio.User
+
+  plug Bouncio.Authenticate when action in [:index, :show, :update, :delete]
 
   def index(conn, _params) do
     users = Repo.all(User)
