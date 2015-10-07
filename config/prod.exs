@@ -18,7 +18,9 @@ config :bouncio, Bouncio.Endpoint,
   cache_static_manifest: "priv/static/manifest.json"
 
 # Do not print debug messages in production
-config :logger, level: :info
+config :logger,
+  level: :error,
+  utc_log: true
 
 # ## Using releases
 #
