@@ -15,6 +15,6 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :bouncio, Bouncio.Repo,
   adapter: Ecto.Adapters.Postgres,
-  database: "bouncer_test",
+  database: "bouncio_test",
   username: "postgres",
   pool: Ecto.Adapters.SQL.Sandbox
