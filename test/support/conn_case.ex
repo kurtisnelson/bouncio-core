@@ -25,9 +25,8 @@ defmodule Bouncio.ConnCase do
       import Ecto.Query, only: [from: 2]
 
       import Bouncio.Router.Helpers
-
-      # The default endpoint for testing
       @endpoint Bouncio.Endpoint
+      import Bouncio.ConnHelper
     end
   end
 
