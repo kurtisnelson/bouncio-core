@@ -23,7 +23,7 @@ defmodule Forge do
 
   register :user,
     __struct__: User,
-    email: "kurt@example.com",
+    email: Faker.Internet.email,
     password: Faker.Lorem.characters(8),
     app_id: Bouncio.App.internal_id
 end

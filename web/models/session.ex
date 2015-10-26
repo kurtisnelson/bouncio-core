@@ -67,10 +67,11 @@ defmodule Bouncio.Session do
 
   mdef authenticate do
     nil, _ -> false
+    _, nil -> false
     user, password -> Comeonin.Bcrypt.checkpw(password, user.crypted_password)
   end
 
-  def new(user) do
+  def new(user) when is_map(user) do
     Bouncio.Repo.insert(Session.changeset(%Session{}, %{user_id: user.id}))
   end
 

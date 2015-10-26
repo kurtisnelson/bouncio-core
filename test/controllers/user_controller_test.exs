@@ -8,9 +8,10 @@ defmodule Bouncio.UserControllerTest do
   @password_error %{"detail" => "should be at least 8 characters", "source" => %{"pointer" => "/data/attributes/password"}, "title" => "Invalid Attribute"}
 
   setup do
+    {:ok, user} = Forge.saved_user(Repo)
     conn = conn() |> put_req_header("accept", "application/json")
-                  |> put_req_header("authorization", "Bearer " <> create_user_token)
-    {:ok, conn: conn}
+                  |> put_req_header("authorization", "Bearer " <> new_session(user).access_token)
+    {:ok, conn: conn, current_user: user}
   end
 
   test "lists all entries on index", %{conn: conn} do
