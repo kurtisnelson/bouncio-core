@@ -7,6 +7,7 @@ defmodule Bouncio.User do
     field :email, :string
     field :password, :string, virtual: true
     field :crypted_password, :string
+    field :email_verified, Ecto.Time
     belongs_to :app, Bouncio.App
     timestamps
   end

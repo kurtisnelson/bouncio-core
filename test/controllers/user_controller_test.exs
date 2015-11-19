@@ -23,7 +23,11 @@ defmodule Bouncio.UserControllerTest do
     {:ok, user} = Forge.saved_user(Repo)
     conn = get conn, user_path(conn, :show, user)
     %{id: id, email: email} = user
-    assert %{"data" => %{"id" => ^id, "attributes" => %{"email" => ^email}}} = json_response(conn, 200)
+
+    case json_response(conn, 200) do
+          %{"data" => %{"attributes" => %{"email" => ^email}}} -> flunk
+          %{"data" => %{"id" => ^id, "attributes" => %{"email-verified" => nil, "masked-email" => _}}} -> true
+    end
   end
 
   test "does not show resource and instead throw error when id is nonexistent", %{conn: conn} do
